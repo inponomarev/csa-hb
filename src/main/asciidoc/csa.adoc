@@ -216,6 +216,7 @@ image::water-filtration.jpg[{image-40-width}]
 [%step]
 * Статанализ — «грязевик» в начале цепочки фильтров
 * В отдельности от других — не работает
+* Другие без него работают хуже
 
 == Случай из практики: долгий отклик
 
@@ -240,7 +241,7 @@ image::water-filtration.jpg[{image-40-width}]
 find . -name \\*.json -print0 | xargs -0 -n1 -t jsonlint -q
 
 [.fragment]
-* Убеждаемся, что отклик на проблему идёт *сразу*
+* Отклик на проблему идёт *сразу*
 
 [.fragment]
 * PROFIT
@@ -284,7 +285,13 @@ find . -name '*.java' -print0 | xargs -0 -L1 bash \
 
 == Spotless: идемпотентный автоформаттер 
  
-Spotless can format <java | kotlin | scala | sql | groovy | javascript | flow | typeScript | css | scss | less | jsx | vue | graphql | json | yaml | markdown | license headers | anything> using <gradle | maven | anything>.
+Spotless can format 
+
+<java | kotlin | scala | sql | groovy | javascript | flow | typeScript | css | scss | less | jsx | vue | graphql | json | yaml | markdown | license headers | anything> 
+
+using 
+
+<gradle | maven | anything>
 
 == Quality Gates
 
