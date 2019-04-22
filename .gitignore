@@ -1,0 +1,26 @@
+target/
+rocksdb/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+#auto-generated images
+src/main/asciidoc/*.png
+
+*.bak
+/src/main/asciidoc/images/ratchet-p1.png
+/src/main/asciidoc/images/ratchet-p2.png
+/src/main/asciidoc/images/ratchet-p3.png
+/src/main/asciidoc/images/unstable-update.png

@@ -1,0 +1,637 @@
+= Непрерывный статический анализ кода
+Иван Пономарёв, КУРС/МФТИ
+:revealjs_theme: black
+:revealjs_customtheme: white_course.css
+:revealjs_slideNumber:
+:revealjs_history:
+:revealjs_progress:
+:encoding: UTF-8
+:lang: ru
+include::_doc_general_attributes.adoc[]
+:doctype: article
+:toclevels: 3
+:imagesdir: images
+:source-highlighter: highlightjs
+:highlightjsdir: highlight
+:icons: font
+:iconfont-remote!:
+:iconfont-name: font-awesome-4.7.0/css/font-awesome
+:revealjs_mouseWheel: true
+:revealjs_center: false
+:revealjs_transition: none
+:revealjs_width: 1600
+:revealjs_height: 900
+
+
+//== Часть 1. Введение
+:!figure-caption:
+
+ponomarev@corchestra.ru
+
+icon:twitter[size=lg] @inponomarev
+
+== План
+
+1. Ограничения и возможности.
+2. Роль и место в конвейере поставки.
+3. Внедрение в legacy-проект.
+
+== What it is and what it is not
+
+[%step]
+* Wikipedia: «Анализ программного обеспечения, производимый без реального выполнения исследуемых программ».
+* Здравый смысл: Любая проверка исходного кода, не требующая написания тестов.
+
+
+== Продавцы статанализаторов:
+
+Наш СА лучше вашего!
+
+.Источник: https://commons.wikimedia.org/wiki/File:Oftheunicorn.jpg[The history of four-footed beasts and serpents]
+image::white-unicorn.jpg[]
+
+[transition="fade-out, slide-in"]
+== Чего в принципе не может СА?
+
+[transition="fade-in, slide-out"]
+== Чего в принципе не может СА?
+
+Зависнет или остановится?
+
+[source, python]
+----
+
+def halts(f):
+    # false, если программа зависает
+    # . . .
+
+def g():
+    if halts(g):
+        while(True):
+            pass
+----
+
+== Теорема Райса
+
+Вычисляет ли функция квадрат числа?
+
+[source, python]
+----
+def is_a_squaring_function(f):
+    # true, если функция вычисляет квадрат
+    # . . .
+
+def halts(f):
+    def t(n):
+        f()
+        return n * n
+    return is_a_squaring_function(t)
+----
+
+== Статанализ не найдёт
+
+* Все `Null Pointer Exception` (если нет Null Safety в языке)
+* Все `Attribute Not Found Exception` (если динамическая типизация)
+
+...не говоря уж о менее тривиальных вещах.
+
+== Не волшебный единорог!
+
+image::no-unicorn.jpg[{image-50-width}]
+
+== Обыкновенная лошадь
+
+.Источник: https://commons.wikimedia.org/wiki/File:Brockhaus_and_Efron_Encyclopedic_Dictionary_b35_043-0.jpg[Энциклопедия Брокгауза и Ефрона]
+image::arab-horse.jpg[{image-50-width}]
+
+
+== Разнообразие средств статанализа
+[%step]
+* Проверка стиля кодирования (checkstyle, flake8)
+* Поиск характерных ошибок в коде (spotbugs, PVS-Studio)
+* Проверка валидности ресурсных файлов (xmllint, YAMLlint, JSONLint)
+* Компиляция/парсинг (`ansible --syntax-check`, `terraform validate`)
+* Предупреждения компиляторов
+* Проверка правописания
+* Конфигурационные тесты
+
+== Что из этого использовать?
+
+[.fragment]
+Всё!
+
+== Как это всё использовать?
+[%step]
+* Однократное применение анализа бессмысленно
+* Анализ должен производиться *непрерывно* и *автоматически*
+* Результаты анализа должны определять *quality gates*
+
+== Роль и место СА в конвейере поставки
+
+== Continuous Delivery Book
+
+[.custom-style]
+[cols="30a,70a"]
+|===
+|image::cd.jpg[]
+|
+**Jez Humble, David Farley.** Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation. Addison-Wesley, 2011
+|===
+
+[transition="fade-out, slide-in"]
+== Типовой конвейер сборки
+
+{nbsp}
+
+image::pipeline.svg[{image-80-width}]
+
+[transition="fade-out, fade-in"]
+== Типовой конвейер сборки
+
+«Фильтрующая способность» +
+{nbsp}
+
+image::raising.svg[{image-50-width}]
+
+
+image::pipeline.svg[{image-70-width}]
+
+
+[transition="fade-in, slide-out"]
+== Типовой конвейер сборки
+
+Сложность, стоимость, +
+время работы, вероятность сбоя
+
+image::raising.svg[{image-50-width}]
+
+image::pipeline.svg[{image-70-width}]
+
+
+
+//== Пирамида Тестирования
+
+//.Источник: https://martinfowler.com/bliki/TestPyramid.html[Martin //Fowler, Test Pyramid]
+//image::test-pyramid.png[{image-70-width}]
+
+// == Пирамида как Фильтр Дефектов
+//
+// Где тут место статическому анализу?
+//
+// .Источник: https://twitter.com/noahsussman/status/836612175707930625[Noah Sussman]
+//image::test-filter.jpg[{image-40-width}]
+
+[transition="fade-out, slide-in"]
+== Многоступенчатый фильтр
+
+{nbsp}
+
+.Источник: https://commons.wikimedia.org/wiki/File:Milli-Q_Water_filtration_station.JPG[Wikimedia Commons]
+image::water-filtration.jpg[{image-50-width}]
+
+[transition="fade-out, fade-in"]
+== Многоступенчатый фильтр
+
+
+Размер пропускаемого загрязнения +
+Пропускная способность
+
+image::decreasing.svg[{image-40-width}]
+
+image::water-filtration.jpg[{image-40-width}]
+
+
+[transition="fade-in, slide-out"]
+== Многоступенчатый фильтр
+
+Сложность, стоимость +
+{nbsp}
+
+image::raising.svg[{image-40-width}]
+
+
+image::water-filtration.jpg[{image-40-width}]
+
+== Вывод
+[%step]
+* Статанализ — «грязевик» в начале цепочки фильтров
+* В отдельности от других — не работает
+
+== Случай из практики: долгий отклик
+
+`resource.json`
+[source,json]
+----
+{
+  "key": "value with "unescaped quotes" "
+}
+----
+
+[%step]
+* Все UI тесты падают.
+* Но это происходит *спустя дни*.
+
+== Случай из практики: лечение
+
+
+* Добавляем JSONLint в начало пути
+
+[source,bash]
+find . -name \\*.json -print0 | xargs -0 -n1 -t jsonlint -q
+
+[.fragment]
+* Убеждаемся, что отклик на проблему идёт *сразу*
+
+[.fragment]
+* PROFIT
+
+[transition="fade-out, slide-in"]
+== Внедрение в legacy-проект
+
+[transition="fade-in, slide-out"]
+== Внедрение в legacy-проект
+
+Знакомая картина?
+
+image::legacy.png[]
+
+[.fragment]
+*Оставить нельзя пофиксить!*
+
+== Пофиксить автоматически?
+
+Google + Stackoverflow:
+
+* 'sed remove trailing spaces'
+
+----
+ find . -name '*.py' -print0 | xargs -0 -n1 -t \
+    sed -i -r 's/\s+$//'
+----
+
+* 'bash add a newline to the end of a file'
+
+----
+find . -name '*.java' -print0 | xargs -0 -L1 bash \
+    -c 'test "$(tail -c 1 "$0")" && printf "\r\n" >> $0'
+----
+* etc etc
+
+== Автофикс
+
+* Javascript: `eslint --fix`
+
+
+== Spotless: идемпотентный автоформаттер 
+ 
+Spotless can format <java | kotlin | scala | sql | groovy | javascript | flow | typeScript | css | scss | less | jsx | vue | graphql | json | yaml | markdown | license headers | anything> using <gradle | maven | anything>.
+
+== Quality Gates
+
+image::porta_del_paradiso.jpg[{image-40-width}]
+
+== Пороговое значение находок
+
+[%step]
+* «Если меньше 100 находок, то код ОК»
+* ДАНО: в коде 90 находок и код ОК.
+* Добавляем Null Pointer Dereference.
+* У нас 91 находка, код всё ещё ОК?
+
+[.fragment]
+Вывод: не используйте данный метод!
+
+== Suppression Profile
+* Старые находки -- в игнор
+* Новые находки -- не пропускаем
+
+== Suppression Profile
+
+Наивный подход:
+
+[source,xml]
+----
+<file name="AppProperties.java">
+  <error line="31" column="5" message="Missing a Javadoc comment."/>
+  <error line="36" column="5" message="Missing a Javadoc comment."/>
+</file>
+----
+
+[.fragment]
+Добавляем текст в начало файла...
+
+[.fragment]
+...номера строк "уползли" и все находки снова появились.
+
+== Suppression Profile
+
+Подход PVS-Studio --- хеши строк:
+[source,json]
+----
+{
+  "FileName": "CelestaParser.java",
+  "ErrorCode": "V6021",
+  "CodePrev": -1464702071,
+  "CodeCurrent": -1679070819,
+  "CodeNext": 35764079
+}
+----
+== Suppression Profile
+Вывод: метод хорош, но труднодоступен
+
+
+== Проверка правописания
+
+[.custom-style]
+[cols="23a,70a"]
+|===
+|image::aspell.png[]
+| Проверка документации:
+[source,bash]
+----
+for f in $(find . -name '*.adoc'); do \
+   cat $f \| aspell --master=ru \
+   --personal=./dict list; done \
+   \| sort \| uniq
+----
+
+Проверка литералов и комментариев:
+[source,bash]
+----
+for f in $(find . -name '*.java'); do \
+   cat $f \| aspell --mode=ccpp \
+   --master=ru --personal=./dict list; done\
+   \| sort \| uniq
+----
+|===
+
+
+== Проверка правописания
+
+[%step]
+* Храните пользовательский словарь в проекте
+* Quality Gate: **не должно быть незнакомых спелчекеру слов**.
+
+
+
+== Упавшая проверка
+
+image::aspell-fail.png[{image-60-width}]
+
+
+== Проверка правописания
+
+Вывод: spellchecker может быть частью пайплайна
+
+== Храповик
+
+Штука, позволяющая движение +
+только в нужную сторону
+
+image::ratchet.png[]
+
+[transition="fade-out, slide-in"]
+== Принцип работы
+[graphviz, "ratchet-p0.png"]
+-----
+digraph G {
+  rankdir="LR";
+  graph [ dpi = 150 ];
+  ri[label="v 1.0\n 160 warnings"];
+  ri -> r1 [label="master branch"];
+  r1 -> r2 [label="master branch", style="invis"];
+  
+  ri ->b1 [xlabel = "dev branch"];
+  r1[label="v 1.1\n 150 warnings"];
+  b1[label="+ 2\nwarnings"];
+  
+  b1->r2[style="invis"];
+  r2[label="152\nwarnings", style="invis"];
+}
+-----
+
+[transition="fade-in, fade-out"]
+== Принцип работы
+[graphviz, "ratchet-p1.png"]
+-----
+digraph G {
+  rankdir="LR";
+  graph [ dpi = 150 ];
+  ri[label="v 1.0\n 160 warnings"];
+  ri -> r1 [label="master branch"];
+  r1 -> r2 [label="master branch"];
+  
+  ri ->b1 [xlabel = "dev branch"];
+  r1[label="v 1.1\n 150 warnings"];
+  b1[label="+ 2\nwarnings"];
+  
+  b1->r2;
+  r2[label="152\nwarnings", color="red", xlabel=<<font color="red">merge blocked</font>>];
+}
+-----
+
+
+== Упавшая проверка
+image::jenkins-fail2.png[]
+
+[transition="fade-in, fade-out"]
+== Принцип работы
+[graphviz, "ratchet-p2.png"]
+-----
+digraph G {
+  rankdir="LR";
+  graph [ dpi = 150 ];
+  ri[label="v 1.0\n 160 warnings"];
+  ri -> r1 [label="master branch"];
+  r1 -> r2 [label="master branch"];
+  
+  ri ->b1;
+  r1[label="v 1.1\n 150 warnings"];
+  b1[label="+ 2\nwarnings"];
+  
+  b1->b2[xlabel="dev branch"];
+  b2->r2
+  b2[label="- 4\nwarnings"]
+  r2[label="148\nwarnings", color="green", xlabel=<<font color="green">merge allowed</font>>]
+}
+-----
+
+[transition="fade-in, slide-out"]
+== Принцип работы
+[graphviz, "ratchet-p3.png"]
+-----
+digraph G {
+  rankdir="LR";
+  graph [ dpi = 150 ];
+  ri[label="v 1.0\n 160 warnings"];
+  ri -> r1 [label="master branch"];
+  r1 -> r2 [label="master branch"];
+  
+  
+  r1[label="v 1.1\n 150 warnings"];
+  
+  
+  r2[label="v 1.2\n148 warnings"];
+  r2->r3;
+  
+  
+  b2->r3;
+  
+  b2[label="+ 1\nwarning"]
+  r3[label="149\nwarnings", color="red", xlabel=<<font color="red">merge blocked</font>>]
+}
+-----
+
+== Много модулей/инструментов
+
+Вид метаданных:
+[source,yaml]
+----
+         # warnings.yml
+         celesta-sql:
+           checkstyle: 434
+           spotbugs: 45
+         celesta-core:
+           checkstyle: 206
+           spotbugs: 13
+         celesta-maven-plugin:
+           checkstyle: 19
+           spotbugs: 0
+         celesta-unit:
+           checkstyle: 0
+           spotbugs: 0
+----
+
+== Упавшая проверка
+
+image::ratchet-report.png[{image-50-width}]
+
+== Как это реализовано у нас
+
+* Jenkins scripted pipeline
+* Jenkins shared libraries in Groovy
+* JFrog Artifactory для хранения метаданных о сборках
+
+== Jenkins Warnings NG Plugin
+
+Собирает и читает отчёты всех известных анализаторов
+
+[source,groovy]
+-----
+def checkstyle 
+  = scanForIssues tool: checkStyle(pattern: '**/cs.xml')
+publishIssues issues: [checkstyle]
+
+def spotbugs 
+  = scanForIssues tool: spotBugs(pattern: '**/spotbugs.xml')
+publishIssues issues: [spotbugs]
+
+def eslint 
+  = scanForIssues tool: esLint(pattern: '**/eslint.xml')
+publishIssues issues: [eslint]
+. . .
+-----
+
+== Jenkins Warnings NG Plugin
+Красиво отображает
+
+image::warnings-ng.png[]
+
+== Jenkins Warnings NG Plugin
+Можно программировать Quality Gates, в т. ч. в виде разницы с reference build: 
+
+[source,groovy]
+-----
+recordIssues tool: java(pattern: '*.log'), 
+  qualityGates: [[threshold: 1, type: 'TOTAL', 
+                                    unstable: true]]
+-----
+
+== Храповик: работа за полгода
+
+.Checkstyle warnings, https://github.com/CourseOrchestra/celesta[Celesta project]
+image::graph.png[{image-50-width}]
+
+== Случай из практики
+
+Кто здесь видит проблему?
+
+[source,yaml]
+----
+#.travis.yml
+. . .
+install:
+  - pip install yamllint
+  - pip install ansible-lint
+  
+script:
+  . . .
+  # Check YAML validity
+  - yamllint -c yamllint.yml .
+
+  # Ansible code static analysis
+  - ansible-lint . . . 
+  - ansible-lint . . . 
+  - ansible-lint . . .
+----
+
+
+== Невоспроизводимый билд
+[graphviz, "unstable-update.png"]
+-----
+digraph G {
+  rankdir="LR";
+  graph [ dpi = 150 ];
+  
+  u -> r0;
+  u[shape=plaintext; label="linter update\n+ 13 warnings"]
+  r0[shape=point, width = 0]
+  r1 -> r0[ arrowhead = none, label="master branch" ];
+  
+  
+  
+  r0-> r2 [];
+  b1 -> b4;
+  
+  r1->b1
+  r1[label="150\nwarnings"]
+  b1[label="± 0\nwarnings"]
+  
+  b4[label="± 0\nwarnings"]
+  b4->r2
+  r2[label="163\nwarnings", color="red", xlabel=<<font color="red">merge blocked</font>>]
+  {rank = same; u; r0; b4;}
+}
+-----
+
+== Фиксируем версии всего!
+[source,yaml]
+----
+#.travis.yml
+. . .
+install:
+  - pip install yamllint==1.13.0
+  - pip install ansible-lint==3.5.1
+----
+
+== Выводы
+[%step]
+* Статический анализ многолик
+* Статический анализ бесполезен при нерегулярном применении
+* Внедряйте анализ в качестве первого звена конвейера интеграции
+* Устанавливайте quality gates. Используйте метод храповика
+* Не забывайте про воспроизводимость сборок
+
+== Ссылки
+
+* *Humble, Jez; Farley, David (2011).* Continuous Delivery: reliable software releases through build, test, and deployment automation.
+* *Иван Пономарев* https://habr.com/ru/post/436868/[Внедряйте статический анализ в процесс, а не ищите с его помощью баги]
+* *Алексей Кудрявцев* https://www.youtube.com/watch?v=8Cx3LHNjI24[Анализ программ: как понять, что ты хороший программист]
+
+== На этом всё!
+
+* icon:twitter[size=lg]  @inponomarev
+{nbsp} +
+* icon:envelope[size=lg] ponomarev@corchestra.ru
+{nbsp} +
+* *Спасибо!*

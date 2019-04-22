@@ -1,0 +1,32 @@
+---
+dist: xenial
+addons:
+  apt:
+    packages:
+      - graphviz
+
+sudo: required
+
+language: java
+jdk: openjdk8
+
+cache:
+  directories:
+  - $HOME/.m2
+  - node_modules
+
+before_install:
+  - curl -sL https://deb.nodesource.com/setup_11.x | sudo bash -
+  - sudo apt install nodejs
+  - npm install decktape
+
+script:
+  - node node_modules/decktape/decktape.js -s 3200x1800 --slides 1-500 reveal "file:///${TRAVIS_BUILD_DIR}/target/generated-slides/index.html?fragments=true" target/generated-slides/slides.pdf  
+  
+after_success:
+  - cd target/generated-slides
+  - git init
+  - git config user.name "${GH_USER_NAME}"
+  - git config user.email "${GH_USER_EMAIL}"
+  - git add . ; git commit -m "Deploy to GitHub Pages"
+  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:gh-pages > /dev/null 2>&1
