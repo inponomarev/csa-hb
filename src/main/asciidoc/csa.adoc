@@ -30,25 +30,29 @@ ponomarev@corchestra.ru
 
 icon:twitter[size=lg] @inponomarev
 
-== План
+== Льём в прод
 
-1. Ограничения и возможности.
-2. Роль и место в конвейере поставки.
-3. Внедрение в legacy-проект.
+image::faucet.jpg[{image-70-width}]
 
-== What it is and what it is not
+== Кодим
+
+image::intake.jpg[{image-70-width}]
+
+== Delivery Pipeline
+
+image::water-filtration.jpg[{image-70-width}]
+
+
+== Покупайте лучшие анализаторы!
+
+//.Источник: https://commons.wikimedia.org/wiki/File:Oftheunicorn.jpg[The history of four-footed beasts and serpents]
+image::vessel.png[]
+
+== Что такое статанализ?
 
 [%step]
 * Wikipedia: «Анализ программного обеспечения, производимый без реального выполнения исследуемых программ».
-* Здравый смысл: Любая проверка исходного кода, не требующая написания тестов.
-
-
-== Продавцы статанализаторов:
-
-Наш СА лучше вашего!
-
-.Источник: https://commons.wikimedia.org/wiki/File:Oftheunicorn.jpg[The history of four-footed beasts and serpents]
-image::white-unicorn.jpg[]
+* Здравый смысл: Любая проверка исходного кода, требующая только исходный код (без тестов).
 
 [transition="fade-out, slide-in"]
 == Чего в принципе не может СА?
@@ -63,8 +67,12 @@ image::white-unicorn.jpg[]
 
 def halts(f):
     # false, если программа зависает
-    # . . .
+    # true, если завершается за конечное время
+----
 
+[.fragment]
+[source, python]
+----
 def g():
     if halts(g):
         while(True):
@@ -79,8 +87,12 @@ def g():
 ----
 def is_a_squaring_function(f):
     # true, если функция вычисляет квадрат
-    # . . .
+    # false, если не вычисляет
+----
 
+[.fragment]
+[source, python]
+----
 def halts(f):
     def t(n):
         f()
@@ -90,30 +102,66 @@ def halts(f):
 
 == Статанализ не найдёт
 
-* Все `Null Pointer Exception` (если нет Null Safety в языке)
-* Все `Attribute Not Found Exception` (если динамическая типизация)
+* Все `object has no attribute` (если динамическая типизация)
 
+[.fragment]
+* Все `NPE` (если нет Null Safety)
+
+[.fragment]
 ...не говоря уж о менее тривиальных вещах.
 
-== Не волшебный единорог!
+== Чистый горный источник
+
+// https://pixabay.com/photos/mountain-lake-mountain-2903193/
+image::pure-lake.jpg[{image-50-width}]
+
+
+== Чистый горный источник
+
+// https://pixabay.com/photos/mountain-lake-mountain-2903193/
+image::pure-lake-scala.jpg[{image-50-width}]
+
+== А что же статанализ?
+
+== Никакого волшебства!
 
 image::no-unicorn.jpg[{image-50-width}]
 
 == Обыкновенная лошадь
 
-.Источник: https://commons.wikimedia.org/wiki/File:Brockhaus_and_Efron_Encyclopedic_Dictionary_b35_043-0.jpg[Энциклопедия Брокгауза и Ефрона]
-image::arab-horse.jpg[{image-50-width}]
+//https://www.pinterest.ru/pin/287948969905963358/?lp=true
+image::horse.jpg[{image-50-width}]
 
 
 == Разнообразие средств статанализа
 [%step]
 * Проверка стиля кодирования (checkstyle, flake8)
-* Поиск характерных ошибок в коде (spotbugs, PVS-Studio)
+* Поиск характерных ошибок в коде (spotbugs, IDEA, PVS-Studio)
 * Проверка валидности ресурсных файлов (xmllint, YAMLlint, JSONLint)
 * Компиляция/парсинг (`ansible --syntax-check`, `terraform validate`)
 * Предупреждения компиляторов
 * Проверка правописания
 * Конфигурационные тесты
+
+== Больше анализаторов!
+
+* Open Google 
+
+* <Your Language> static analyzer
+
+* <Your Language> linter
+
+== Кто программирует на Bash?
+
+image::shellcheck-cap.png[{image-80-width}] 
+image::shellcheck.png[{image-80-width}]
+
+== Intellij IDEA в текстовой консоли
+
+* `bin/format.sh` -- форматирование кода
+* `bin/inspect.sh` -- инспекции (с выводом в .xml)
+
+https://habr.com/post/450214/[Запускаем инспекции IntelliJ IDEA на Jenkins]
 
 == Что из этого использовать?
 
@@ -214,7 +262,7 @@ image::water-filtration.jpg[{image-40-width}]
 
 == Вывод
 [%step]
-* Статанализ — «грязевик» в начале цепочки фильтров
+* Статанализ — «фильтр грубой очистки» в начале каскада фильтров
 * В отдельности от других — не работает
 * Другие без него работают хуже
 
@@ -254,7 +302,7 @@ find . -name \\*.json -print0 | xargs -0 -n1 -t jsonlint -q
 
 Знакомая картина?
 
-image::legacy.png[]
+image::legacy.png[{image-70-width}]
 
 [.fragment]
 *Оставить нельзя пофиксить!*
@@ -410,7 +458,7 @@ digraph G {
   
   ri ->b1 [xlabel = "dev branch"];
   r1[label="v 1.1\n 150 warnings"];
-  b1[label="+ 2\nwarnings"];
+  b1[label="160 + 2\nwarnings"];
   
   b1->r2[style="invis"];
   r2[label="152\nwarnings", style="invis"];
@@ -430,7 +478,7 @@ digraph G {
   
   ri ->b1 [xlabel = "dev branch"];
   r1[label="v 1.1\n 150 warnings"];
-  b1[label="+ 2\nwarnings"];
+  b1[label="160 + 2\nwarnings"];
   
   b1->r2;
   r2[label="152\nwarnings", color="red", xlabel=<<font color="red">merge blocked</font>>];
@@ -511,13 +559,60 @@ digraph G {
 
 == Упавшая проверка
 
-image::ratchet-report.png[{image-50-width}]
+image::ratchet-report.png[{image-60-width}]
 
 == Как это реализовано у нас
 
 * Jenkins scripted pipeline
 * Jenkins shared libraries in Groovy
 * JFrog Artifactory для хранения метаданных о сборках
+
+== Подсчёт основан на XML-выводе анализаторов
+
+[source,groovy]
+----
+
+private Map countModule(prefix) {
+    def count = [:]
+    def f = new File("${prefix}/target/checkstyle-result.xml")
+    if (f.exists()) {
+        def checkstyle = new XmlSlurper().parseText(f.text)
+        count.put("checkstyle", checkstyle.file.error.size())
+    }
+    . . . 
+    count
+}
+----
+
+== Скачиваем данные о последней сборке
+
+[source,groovy]
+----
+def server = Artifactory.server 'ART'
+def downloadSpec = """
+        {"files": [
+            {
+                "pattern": "warn/${project}/*/warnings.yml",
+                "build": "${project} :: dev/LATEST",
+                "target": "previous.yml",
+                "flat": "true"
+            }
+            ]
+        }"""
+server.download spec: downloadSpec
+oldWarnings = readYaml file: 'previous.yml'
+----
+
+== Шаг храповика
+
+[source,groovy]
+----
+stage ('Ratcheting') {
+    def warningsMap = countWarnings()
+    writeYaml file: 'target/warnings.yml', data: warningsMap
+    compareWarningMaps oldWarnings, warningsMap
+}
+----
 
 == Jenkins Warnings NG Plugin
 
@@ -527,17 +622,20 @@ image::ratchet-report.png[{image-50-width}]
 -----
 def checkstyle 
   = scanForIssues tool: checkStyle(pattern: '**/cs.xml')
-publishIssues issues: [checkstyle]
 
 def spotbugs 
   = scanForIssues tool: spotBugs(pattern: '**/spotbugs.xml')
-publishIssues issues: [spotbugs]
+
+def idea 
+  = scanForIssues tool: ideaInspection(pattern: 'target/idea_inspections/*.xml')
 
 def eslint 
   = scanForIssues tool: esLint(pattern: '**/eslint.xml')
-publishIssues issues: [eslint]
+  
+publishIssues issues: [checkstyle, spotbugs, idea, eslint]
 . . .
 -----
+
 
 == Jenkins Warnings NG Plugin
 Красиво отображает
@@ -583,7 +681,7 @@ script:
 ----
 
 
-== Невоспроизводимый билд
+== Невоспроизводимая сборка
 [graphviz, "unstable-update.png"]
 -----
 digraph G {
