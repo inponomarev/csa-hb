@@ -30,9 +30,10 @@ ponomarev@corchestra.ru
 
 icon:twitter[size=lg] @inponomarev
 
+[%notitle]
 == Льём в прод
 
-image::faucet.jpg[{image-70-width}]
+image::faucet.jpg[{image-80-width}]
 
 == Кодим
 
