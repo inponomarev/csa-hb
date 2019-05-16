@@ -38,22 +38,21 @@ image::faucet.jpg[canvas, size=cover]
 [%notitle]
 == Кодим
 
-image::intake.jpg[{image-100-width}]
+image::intake.jpg[canvas, size=cover]
 
 [%notitle]
 == Delivery Pipeline
 
-image::water-filtration.jpg[{image-100-width}]
+image::water-filtration.jpg[canvas, size=cover]
 
 [%notitle]
 == Покупайте лучшие анализаторы!
 
 //.Источник: https://commons.wikimedia.org/wiki/File:Oftheunicorn.jpg[The history of four-footed beasts and serpents]
-image::vessel.png[]
+image::vessel.png[{image-50-width}]
 
 == Что такое статанализ?
 
-[%step]
 * Wikipedia: «Анализ программного обеспечения, производимый без реального выполнения исследуемых программ».
 * Здравый смысл: Любая проверка исходного кода, требующая только исходный код (без тестов).
 
@@ -103,70 +102,92 @@ def halts(f):
     return is_a_squaring_function(t)
 ----
 
-== Статанализ не найдёт
+== Статанализ не найдёт то, что решается на уровне языка
 
-* Все `object has no attribute` (если динамическая типизация)
+* `object has no attribute` (если динамическая типизация)
+* `NPE` (если нет Null Safety)
 
-[.fragment]
-* Все `NPE` (если нет Null Safety)
-
-[.fragment]
-...не говоря уж о менее тривиальных вещах.
-
+[%notitle]
 == Чистый горный источник
 
 // https://pixabay.com/photos/mountain-lake-mountain-2903193/
-image::pure-lake.jpg[{image-50-width}]
+// image::pure-lake-scala.jpg[{image-50-width}]
 
+[.custom-style]
+[cols="50a,50a"]
+|===
+|image::swamp.jpg[]
+Близкое динамическое болото
+|image::pure-lake.jpg[]
+Труднодоступное статическое озеро
+|===
 
-== Чистый горный источник
-
-// https://pixabay.com/photos/mountain-lake-mountain-2903193/
-image::pure-lake-scala.jpg[{image-50-width}]
 
 == А что же статанализ?
 
-== Никакого волшебства!
+[.custom-style]
+[cols="50a,50a"]
+|===
+|[.fragment]
+image::no-unicorn.jpg[]
+|[.fragment]
+image::horse.jpg[]
+|===
 
-image::no-unicorn.jpg[{image-50-width}]
-
-== Обыкновенная лошадь
-
-//https://www.pinterest.ru/pin/287948969905963358/?lp=true
-image::horse.jpg[{image-50-width}]
 
 
 == Разнообразие средств статанализа
-[%step]
+[.custom-style]
+[cols="23a,70a"]
+|===
+|image::f1.jpg[]
+| [%step]
 * Проверка стиля кодирования (checkstyle, flake8)
 * Поиск характерных ошибок в коде (spotbugs, IDEA, PVS-Studio)
 * Проверка валидности ресурсных файлов (xmllint, YAMLlint, JSONLint)
+|===
 
 
+== Разнообразие средств статанализа
+[.custom-style]
+[cols="23a,70a"]
+|===
+|image::f2.jpg[]
+| [%step]
 * Компиляция/парсинг (`ansible --syntax-check`, `terraform validate`)
 * Предупреждения компиляторов
 * Проверка правописания
 * Конфигурационные тесты
+|===
+
+
 
 == Больше анализаторов!
 
-* Open Google 
+* Google <Your Language> static analyzer
 
-* <Your Language> static analyzer
+* Google <Your Language> linter
 
-* <Your Language> linter
+[%notitle]
+== Обязательно найдете
+image::many_filters.jpg[canvas, size=cover]
 
 == Кто программирует на Bash?
-
+[.fragment]
 image::shellcheck-cap.png[{image-80-width}] 
+[.fragment]
 image::shellcheck.png[{image-80-width}]
 
-== Intellij IDEA в текстовой консоли
+== Intellij IDEA в CI
 
+[.fragment]
 * `bin/format.sh` -- форматирование кода
 * `bin/inspect.sh` -- инспекции (с выводом в .xml)
 
-https://habr.com/post/450214/[Запускаем инспекции IntelliJ IDEA на Jenkins]
+// Хабрапост: https://habr.com/post/450214/[Запускаем инспекции IntelliJ IDEA на Jenkins]
+
+[.fragment]
+image::idea-jenkins.png[{image-80-width}]
 
 == Что из этого использовать?
 
@@ -180,8 +201,6 @@ https://habr.com/post/450214/[Запускаем инспекции IntelliJ IDE
 * Результаты анализа должны определять *quality gates*
 
 == Роль и место СА в конвейере поставки
-
-== Continuous Delivery Book
 
 [.custom-style]
 [cols="30a,70a"]
@@ -240,7 +259,7 @@ image::pipeline2.svg[{image-100-width}]
 
 {nbsp}
 
-.Источник: https://commons.wikimedia.org/wiki/File:Milli-Q_Water_filtration_station.JPG[Wikimedia Commons]
+//.Источник: https://commons.wikimedia.org/wiki/File:Milli-Q_Water_filtration_station.JPG[Wikimedia Commons]
 image::water-filtration.jpg[{image-50-width}]
 
 [transition="fade-out, fade-in"]
@@ -316,7 +335,7 @@ image::legacy.png[{image-70-width}]
 [%notitle]
 == С легаси нелегко
 
-image::swampman.jpg[{image-100-width}]
+image::swampman.jpg[canvas, size=cover]
 
 
 == Пофиксить автоматически?
@@ -353,9 +372,15 @@ using
 
 <gradle | maven | anything>
 
+[%notitle]
+== Теперь полегче
+
+image::more-pure.jpg[canvas, size=cover]
+
+
 == Quality Gates
 
-image::porta_del_paradiso.jpg[{image-40-width}]
+image::porta_del_paradiso.jpg[{image-30-width}]
 
 == Пороговое значение находок
 
@@ -406,6 +431,9 @@ image::porta_del_paradiso.jpg[{image-40-width}]
 == Suppression Profile
 Вывод: метод хорош, но труднодоступен
 
+== Проверка правописания
+
+image::hard_to_spell.svg[{image-80-width}]
 
 == Проверка правописания
 
@@ -431,7 +459,6 @@ for f in $(find . -name '*.java'); do \
    \| sort \| uniq
 ----
 |===
-
 
 == Проверка правописания
 
@@ -576,11 +603,20 @@ image::ratchet-report.png[{image-60-width}]
 * Jenkins shared libraries in Groovy
 * JFrog Artifactory для хранения метаданных о сборках
 
-== Подсчёт основан на XML-выводе анализаторов
+== Парсинг XML-вывода анализаторов
+
+[source,xml]
+----
+<checkstyle>
+  <file name="...">
+    <error line="1" severity="..." message="..."/>
+  </file>
+    ...
+</checkstyle>
+----
 
 [source,groovy]
 ----
-
 private Map countModule(prefix) {
     def count = [:]
     def f = new File("${prefix}/target/checkstyle-result.xml")
@@ -657,14 +693,21 @@ image::warnings-ng.png[]
 [source,groovy]
 -----
 recordIssues tool: java(pattern: '*.log'), 
-  qualityGates: [[threshold: 1, type: 'TOTAL', 
-                                    unstable: true]]
+             qualityGates: [[threshold: 1, 
+                             type: 'TOTAL', 
+                             unstable: true]]
 -----
 
-== Храповик: работа за полгода
+== Храповик: ожидание
+// .Checkstyle warnings, https://github.com/CourseOrchestra/celesta[Celesta project]
+// image::graph.png[{image-50-width}]
 
-.Checkstyle warnings, https://github.com/CourseOrchestra/celesta[Celesta project]
-image::graph.png[{image-50-width}]
+image::expected-ratchet.svg[{image-60-width}]
+
+== Храповик: реальность
+
+image::actual-ratchet.svg[{image-60-width}]
+
 
 == Случай из практики
 
@@ -718,9 +761,8 @@ digraph G {
 }
 -----
 
-[%notitle]
-== При смене фильтров бывает грязно
-image::dirty_filter.jpg[]
+== При замене фильтров бывает грязно!
+image::dirty_filter.jpg[{image-40-width}]
 
 // http://profilter.su/catalog/filtry-big-blue-10-dlya-kholodnoy-vody/945.html
 
@@ -738,24 +780,21 @@ install:
 
 == Статанализ разнообразен
 
-image::many_filters.jpg[]
+image::many_filters.jpg[{image-60-width}]
 
-[%notitle]
 == Статанализ бесполезен при нерегулярном применении
-
-image::muddy_water.jpg[]
+image::muddy_water.jpg[{image-60-width}]
 // https://www.fluidrecyclesystems.com/portfolio/mine-tailings-csg/
 
 == Фильтр грубой очистки ставится в начале каскада
-image::rough_filter.jpg[]
+image::rough_filter.jpg[{image-60-width}]
 
 == Используйте храповик
-image::ratchet.svg[]
-
+image::ratchet.svg[{image-60-width}]
 
 
 == Не забывайте про повторяемость сборок
-image::repeatable.jpg[]
+image::repeatable.jpg[{image-60-width}]
 
 
 == Ссылки
@@ -772,3 +811,5 @@ image::repeatable.jpg[]
 * icon:envelope[size=lg] ponomarev@corchestra.ru
 {nbsp} +
 * *Спасибо!*
+
+image::ratchet.png[{image-20-width}]
