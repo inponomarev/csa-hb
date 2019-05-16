@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Создано Microsoft Visio 11.0, Экспорт SVG, версия 1.0 pipeline.svg Страница-1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="3.63093in" height="1.58147in"
+		viewBox="0 0 261.427 113.866" xml:space="preserve" color-interpolation-filters="sRGB" class="st7">
+	<v:documentProperties v:langID="1049" v:metric="true" v:viewMarkup="false"/>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {fill:none;stroke:#164326;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
+		.st2 {fill:#164326;font-family:Calibri;font-size:1.00001em}
+		.st3 {font-size:1em}
+		.st4 {fill:none}
+		.st5 {stroke:#164326;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
+		.st6 {fill:none;stroke:#164326;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24;visibility:hidden}
+		.st7 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>Страница-1</title>
+		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24" v:shadowOffsetX="8.50394"
+				v:shadowOffsetY="-8.50394"/>
+		<g id="shape1-1" v:mID="1" v:groupContext="shape" transform="translate(-53.9385,113.626) rotate(-90)">
+			<title>Поле</title>
+			<desc>статический анализ</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="56.6929" cy="99.6926" width="113.39" height="28.3465"/>
+			<rect x="0" y="85.5194" width="113.386" height="28.3465" class="st1"/>
+			<text x="6.63" y="103.29" class="st2" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>статический анализ</text>		</g>
+		<g id="shape2-4" v:mID="2" v:groupContext="shape" transform="translate(-25.592,113.626) rotate(-90)">
+			<title>Поле.2</title>
+			<desc>компиляция</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="56.6929" cy="99.6926" width="113.39" height="28.3465"/>
+			<rect x="0" y="85.5194" width="113.386" height="28.3465" class="st1"/>
+			<text x="25.08" y="103.29" class="st2" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>компиляция</text>		</g>
+		<g id="shape3-7" v:mID="3" v:groupContext="shape" transform="translate(2.75446,113.626) rotate(-90)">
+			<title>Поле.3</title>
+			<desc>модульные тесты</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="56.6929" cy="99.6926" width="113.39" height="28.3465"/>
+			<rect x="0" y="85.5194" width="113.386" height="28.3465" class="st1"/>
+			<text x="11.82" y="103.29" class="st2" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>модульные тесты</text>		</g>
+		<g id="shape4-10" v:mID="4" v:groupContext="shape" transform="translate(31.1009,113.626) rotate(-90)">
+			<title>Поле.4</title>
+			<desc>интеграционные тесты</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="56.6929" cy="99.6926" width="113.39" height="28.3465"/>
+			<rect x="0" y="85.5194" width="113.386" height="28.3465" class="st1"/>
+			<text x="13.78" y="96.09" class="st2" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>интеграционные <tspan
+						x="42.53" dy="1.2em" class="st3">тесты</tspan></text>		</g>
+		<g id="shape5-14" v:mID="5" v:groupContext="shape" transform="translate(59.4474,113.626) rotate(-90)">
+			<title>Поле.5</title>
+			<desc>UI тесты</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="56.6929" cy="99.6926" width="113.39" height="28.3465"/>
+			<rect x="0" y="85.5194" width="113.386" height="28.3465" class="st1"/>
+			<text x="35.81" y="103.29" class="st2" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>UI <tspan class="st3"
+						v:langID="1049">тесты</tspan></text>		</g>
+		<g id="shape6-18" v:mID="6" v:groupContext="shape" transform="translate(87.7938,113.626) rotate(-90)">
+			<title>Поле.6</title>
+			<desc>performance check</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="56.6929" cy="99.6926" width="113.39" height="28.3465"/>
+			<rect x="0" y="85.5194" width="113.386" height="28.3465" class="st1"/>
+			<text x="9.74" y="103.29" class="st2" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>performance check</text>		</g>
+		<g id="shape7-21" v:mID="7" v:groupContext="shape" transform="translate(116.14,113.626) rotate(-90)">
+			<title>Поле.7</title>
+			<desc>ручная проверка</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="56.6929" cy="99.6926" width="113.39" height="28.3465"/>
+			<rect x="0" y="85.5194" width="113.386" height="28.3465" class="st1"/>
+			<text x="13.62" y="103.29" class="st2" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>ручная проверка</text>		</g>
+		<g id="group9-24" transform="translate(0.399811,-37.0904)" v:mID="9" v:groupContext="group">
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<title>Простая односторонняя</title>
+			<g id="shape10-25" v:mID="10" v:groupContext="shape">
+				<title>Лист.10</title>
+				<path d="M0 103.94 L21.26 103.94 L21.26 113.87 L31.18 94.02 L21.26 74.18 L21.26 84.1 L0 84.1 L0 103.94 Z"
+						class="st4"/>
+				<path d="M0 103.94 L21.26 103.94 L21.26 113.87 L31.18 94.02 L21.26 74.18 L21.26 84.1 L0 84.1" class="st5"/>
+			</g>
+			<g id="shape11-28" v:mID="11" v:groupContext="shape">
+				<title>Лист.11</title>
+				<path d="M0 103.94 L21.26 103.94 L21.26 113.87 L31.18 94.02 L21.26 74.18 L21.26 84.1 L0 84.1 L0 103.94" class="st5"/>
+			</g>
+			<g id="shape12-31" v:mID="12" v:groupContext="shape" transform="translate(-0.399811,-10.0893)">
+				<title>Лист.12</title>
+				<rect x="0" y="94.3593" width="0.176" height="19.5065" class="st6"/>
+			</g>
+		</g>
+		<g id="group13-33" transform="translate(230.006,-37.0904)" v:mID="13" v:groupContext="group">
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<title>Простая односторонняя.13</title>
+			<g id="shape14-34" v:mID="14" v:groupContext="shape">
+				<title>Лист.14</title>
+				<path d="M0 103.94 L21.26 103.94 L21.26 113.87 L31.18 94.02 L21.26 74.18 L21.26 84.1 L0 84.1 L0 103.94 Z"
+						class="st4"/>
+				<path d="M0 103.94 L21.26 103.94 L21.26 113.87 L31.18 94.02 L21.26 74.18 L21.26 84.1 L0 84.1" class="st5"/>
+			</g>
+			<g id="shape15-37" v:mID="15" v:groupContext="shape">
+				<title>Лист.15</title>
+				<path d="M0 103.94 L21.26 103.94 L21.26 113.87 L31.18 94.02 L21.26 74.18 L21.26 84.1 L0 84.1 L0 103.94" class="st5"/>
+			</g>
+			<g id="shape16-40" v:mID="16" v:groupContext="shape" transform="translate(-0.399811,-10.0893)">
+				<title>Лист.16</title>
+				<rect x="0" y="94.3593" width="0.176" height="19.5065" class="st6"/>
+			</g>
+		</g>
+	</g>
+</svg>

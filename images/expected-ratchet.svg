@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Создано Microsoft Visio 11.0, Экспорт SVG, версия 1.0 expected-ratchet.svg Страница-1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="2.99331in" height="2.28461in"
+		viewBox="0 0 215.518 164.492" xml:space="preserve" color-interpolation-filters="sRGB" class="st6">
+	<v:documentProperties v:langID="1049" v:metric="true" v:viewMarkup="false"/>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {fill:#548bd4;stroke:#548bd4;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st2 {stroke:#548bd4;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.16}
+		.st3 {fill:#548bd4;visibility:hidden}
+		.st4 {stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st5 {fill:#000080;font-family:Calibri;font-size:1.00001em}
+		.st6 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>Страница-1</title>
+		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24" v:shadowOffsetX="8.50394"
+				v:shadowOffsetY="-8.50394"/>
+		<g id="group2-1" transform="translate(14.3207,-22.0098)" v:mID="2" v:groupContext="group">
+			<v:custProps>
+				<v:cp v:nameU="Points" v:lbl="Точки данных" v:type="1" v:format=" 2; 3; 4; 5; 6; 7; 8; 9;10;11;12;13;14;15"
+						v:sortKey="visMkt0" v:langID="1049" v:val="VT4( 2)"/>
+			</v:custProps>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+				<v:ud v:nameU="Scale" v:val="VT0(1):26"/>
+				<v:ud v:nameU="AntiScale" v:val="VT0(1):26"/>
+			</v:userDefs>
+			<title>График.2</title>
+			<g id="shape3-2" v:mID="3" v:groupContext="shape">
+				<title>Лист.3</title>
+				<path d="M0 55.36 L198.43 55.36 L198.43 164.49 L0 164.49 L0 55.36 Z" class="st1"/>
+			</g>
+			<g id="shape4-4" v:mID="4" v:groupContext="shape">
+				<title>Лист.4</title>
+				<path d="M0 34.1 L0 164.49 L199.04 164.49" class="st2"/>
+			</g>
+			<g id="shape5-7" v:mID="5" v:groupContext="shape" transform="translate(-164.492,164.492) rotate(-90)">
+				<title>Лист.5</title>
+				<desc>Число находок</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)" v:tabSpace="42.5197"/>
+				<v:textRect cx="70.8661" cy="157.707" width="141.74" height="13.5707"/>
+				<rect x="0" y="150.921" width="141.732" height="13.5707" class="st3"/>
+				<rect x="0" y="150.921" width="141.732" height="13.5707" class="st4"/>
+				<text x="33.03" y="161.31" class="st5" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>Число находок</text>			</g>
+			<g id="shape11-11" v:mID="11" v:groupContext="shape" transform="translate(0,21.2598)">
+				<title>Лист.11</title>
+				<desc>Время</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)" v:tabSpace="42.5197"/>
+				<v:textRect cx="99.5188" cy="153.862" width="199.04" height="21.2598"/>
+				<rect x="0" y="143.232" width="199.038" height="21.2598" class="st3"/>
+				<rect x="0" y="143.232" width="199.038" height="21.2598" class="st4"/>
+				<text x="83.21" y="157.46" class="st5" v:langID="1049"><v:paragraph v:horizAlign="1"/><v:tabList/>Время</text>			</g>
+		</g>
+	</g>
+</svg>

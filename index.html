@@ -1,0 +1,422 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8" /><meta name="author" content="Иван Пономарёв, КУРС/МФТИ" /><title>Непрерывный статический анализ кода</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js-3.5.0/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="white_course.css" id="theme" /><link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.css" /><style>/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
+/*pre.CodeRay {background-color:#f7f7f8;}*/
+.CodeRay .line-numbers{border-right:1px solid #d8d8d8;padding:0 0.5em 0 .25em}
+.CodeRay span.line-numbers{display:inline-block;margin-right:.5em;color:rgba(0,0,0,.3)}
+.CodeRay .line-numbers strong{color:rgba(0,0,0,.4)}
+table.CodeRay{border-collapse:separate;border-spacing:0;margin-bottom:0;border:0;background:none}
+table.CodeRay td{vertical-align: top;line-height:1.45}
+table.CodeRay td.line-numbers{text-align:right}
+table.CodeRay td.line-numbers>pre{padding:0;color:rgba(0,0,0,.3)}
+table.CodeRay td.code{padding:0 0 0 .5em}
+table.CodeRay td.code>pre{padding:0}
+.CodeRay .debug{color:#fff !important;background:#000080 !important}
+.CodeRay .annotation{color:#007}
+.CodeRay .attribute-name{color:#000080}
+.CodeRay .attribute-value{color:#700}
+.CodeRay .binary{color:#509}
+.CodeRay .comment{color:#998;font-style:italic}
+.CodeRay .char{color:#04d}
+.CodeRay .char .content{color:#04d}
+.CodeRay .char .delimiter{color:#039}
+.CodeRay .class{color:#458;font-weight:bold}
+.CodeRay .complex{color:#a08}
+.CodeRay .constant,.CodeRay .predefined-constant{color:#008080}
+.CodeRay .color{color:#099}
+.CodeRay .class-variable{color:#369}
+.CodeRay .decorator{color:#b0b}
+.CodeRay .definition{color:#099}
+.CodeRay .delimiter{color:#000}
+.CodeRay .doc{color:#970}
+.CodeRay .doctype{color:#34b}
+.CodeRay .doc-string{color:#d42}
+.CodeRay .escape{color:#666}
+.CodeRay .entity{color:#800}
+.CodeRay .error{color:#808}
+.CodeRay .exception{color:inherit}
+.CodeRay .filename{color:#099}
+.CodeRay .function{color:#900;font-weight:bold}
+.CodeRay .global-variable{color:#008080}
+.CodeRay .hex{color:#058}
+.CodeRay .integer,.CodeRay .float{color:#099}
+.CodeRay .include{color:#555}
+.CodeRay .inline{color:#000}
+.CodeRay .inline .inline{background:#ccc}
+.CodeRay .inline .inline .inline{background:#bbb}
+.CodeRay .inline .inline-delimiter{color:#d14}
+.CodeRay .inline-delimiter{color:#d14}
+.CodeRay .important{color:#555;font-weight:bold}
+.CodeRay .interpreted{color:#b2b}
+.CodeRay .instance-variable{color:#008080}
+.CodeRay .label{color:#970}
+.CodeRay .local-variable{color:#963}
+.CodeRay .octal{color:#40e}
+.CodeRay .predefined{color:#369}
+.CodeRay .preprocessor{color:#579}
+.CodeRay .pseudo-class{color:#555}
+.CodeRay .directive{font-weight:bold}
+.CodeRay .type{font-weight:bold}
+.CodeRay .predefined-type{color:inherit}
+.CodeRay .reserved,.CodeRay .keyword {color:#000;font-weight:bold}
+.CodeRay .key{color:#808}
+.CodeRay .key .delimiter{color:#606}
+.CodeRay .key .char{color:#80f}
+.CodeRay .value{color:#088}
+.CodeRay .regexp .delimiter{color:#808}
+.CodeRay .regexp .content{color:#808}
+.CodeRay .regexp .modifier{color:#808}
+.CodeRay .regexp .char{color:#d14}
+.CodeRay .regexp .function{color:#404;font-weight:bold}
+.CodeRay .string{color:#d20}
+.CodeRay .string .string .string{background:#ffd0d0}
+.CodeRay .string .content{color:#d14}
+.CodeRay .string .char{color:#d14}
+.CodeRay .string .delimiter{color:#d14}
+.CodeRay .shell{color:#d14}
+.CodeRay .shell .delimiter{color:#d14}
+.CodeRay .symbol{color:#990073}
+.CodeRay .symbol .content{color:#a60}
+.CodeRay .symbol .delimiter{color:#630}
+.CodeRay .tag{color:#008080}
+.CodeRay .tag-special{color:#d70}
+.CodeRay .variable{color:#036}
+.CodeRay .insert{background:#afa}
+.CodeRay .delete{background:#faa}
+.CodeRay .change{color:#aaf;background:#007}
+.CodeRay .head{color:#f8f;background:#505}
+.CodeRay .insert .insert{color:#080}
+.CodeRay .delete .delete{color:#800}
+.CodeRay .change .change{color:#66f}
+.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.5.0/lib/css/zenburn.css" rel="stylesheet" /><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js-3.5.0/css/print/pdf.css" : "reveal.js-3.5.0/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="reveal.js-3.5.0/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Непрерывный статический анализ кода</h1><div class="preamble"><div class="paragraph"><p><a href="mailto:ponomarev@corchestra.ru">ponomarev@corchestra.ru</a></p></div>
+<div class="paragraph"><p><span class="icon"><i class="fa fa-twitter fa-lg"></i></span> @inponomarev</p></div></div><p class="author"><small>Иван Пономарёв, КУРС/МФТИ</small></p></section>
+<section id="" data-background-image="images/faucet.jpg" data-background-size="cover"></section>
+<section id="" data-background-image="images/intake.jpg" data-background-size="cover"></section>
+<section id="delivery_pipeline" data-background-image="images/water-filtration.jpg" data-background-size="cover"></section>
+<section id=""><div class="imageblock" style=""><img src="images/vessel.png" alt="vessel" width="50%" /></div></section>
+<section id=""><h2>Что такое статанализ?</h2><div class="ulist"><ul><li><p>Wikipedia: «Анализ программного обеспечения, производимый без реального выполнения исследуемых программ».</p></li><li><p>Здравый смысл: Любая проверка исходного кода, требующая только исходный код (без тестов).</p></li></ul></div></section>
+<section id="" data-transition="fade-out, slide-in"><h2>Чего в принципе не может СА?</h2></section>
+<section id="" data-transition="fade-in, slide-out"><h2>Чего в принципе не может СА?</h2><div class="paragraph"><p>Зависнет или остановится?</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code class="python language-python"><span class="keyword">def</span> <span class="function">halts</span>(f):
+    <span class="comment"># false, если программа зависает</span>
+    <span class="comment"># true, если завершается за конечное время</span></code></pre></div></div>
+<div class="listingblock fragment"><div class="content"><pre class="CodeRay"><code class="python language-python"><span class="keyword">def</span> <span class="function">g</span>():
+    <span class="keyword">if</span> halts(g):
+        <span class="keyword">while</span>(<span class="predefined-constant">True</span>):
+            <span class="keyword">pass</span></code></pre></div></div></section>
+<section id=""><h2>Теорема Райса</h2><div class="paragraph"><p>Вычисляет ли функция квадрат числа?</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code class="python language-python"><span class="keyword">def</span> <span class="function">is_a_squaring_function</span>(f):
+    <span class="comment"># true, если функция вычисляет квадрат</span>
+    <span class="comment"># false, если не вычисляет</span></code></pre></div></div>
+<div class="listingblock fragment"><div class="content"><pre class="CodeRay"><code class="python language-python"><span class="keyword">def</span> <span class="function">halts</span>(f):
+    <span class="keyword">def</span> <span class="function">t</span>(n):
+        f()
+        <span class="keyword">return</span> n * n
+    <span class="keyword">return</span> is_a_squaring_function(t)</code></pre></div></div></section>
+<section id=""><h2>Статанализ не найдёт то, что решается на уровне языка</h2><div class="ulist"><ul><li><p><code>object has no attribute</code> (если динамическая типизация)</p></li><li><p><code>NPE</code> (если нет Null Safety)</p></li></ul></div></section>
+<section id=""><table class="tableblock frame-all grid-all custom-style" style="width:100%"><colgroup><col style="width:50%" /><col style="width:50%" /></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="imageblock" style=""><img src="images/swamp.jpg" alt="swamp" /></div>
+<div class="paragraph"><p>Близкое динамическое болото</p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="imageblock" style=""><img src="images/pure-lake.jpg" alt="pure lake" /></div>
+<div class="paragraph"><p>Труднодоступное статическое озеро</p></div></div></td></tr></table></section>
+<section id=""><h2>А что же статанализ?</h2><table class="tableblock frame-all grid-all custom-style" style="width:100%"><colgroup><col style="width:50%" /><col style="width:50%" /></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="imageblock fragment" style=""><img src="images/no-unicorn.jpg" alt="no unicorn" /></div></div></td><td class="tableblock halign-left valign-top"><div><div class="imageblock fragment" style=""><img src="images/horse.jpg" alt="horse" /></div></div></td></tr></table></section>
+<section id=""><h2>Разнообразие средств статанализа</h2><table class="tableblock frame-all grid-all custom-style" style="width:100%"><colgroup><col style="width:24.7311%" /><col style="width:75.2689%" /></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="imageblock" style=""><img src="images/f1.jpg" alt="f1" /></div></div></td><td class="tableblock halign-left valign-top"><div><div class="ulist"><ul><li class="fragment"><p>Проверка стиля кодирования (checkstyle, flake8)</p></li><li class="fragment"><p>Поиск характерных ошибок в коде (spotbugs, IDEA, PVS-Studio)</p></li><li class="fragment"><p>Проверка валидности ресурсных файлов (xmllint, YAMLlint, JSONLint)</p></li></ul></div></div></td></tr></table></section>
+<section id=""><h2>Разнообразие средств статанализа</h2><table class="tableblock frame-all grid-all custom-style" style="width:100%"><colgroup><col style="width:24.7311%" /><col style="width:75.2689%" /></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="imageblock" style=""><img src="images/f2.jpg" alt="f2" /></div></div></td><td class="tableblock halign-left valign-top"><div><div class="ulist"><ul><li class="fragment"><p>Компиляция/парсинг (<code>ansible --syntax-check</code>, <code>terraform validate</code>)</p></li><li class="fragment"><p>Предупреждения компиляторов</p></li><li class="fragment"><p>Проверка правописания</p></li><li class="fragment"><p>Конфигурационные тесты</p></li></ul></div></div></td></tr></table></section>
+<section id=""><h2>Больше анализаторов!</h2><div class="ulist"><ul><li><p>Google &lt;Your Language&gt; static analyzer</p></li><li><p>Google &lt;Your Language&gt; linter</p></li></ul></div></section>
+<section id="" data-background-image="images/many_filters.jpg" data-background-size="cover"></section>
+<section id="bash"><h2>Кто программирует на Bash?</h2><div class="imageblock fragment" style=""><img src="images/shellcheck-cap.png" alt="shellcheck cap" width="80%" /></div>
+<div class="imageblock fragment" style=""><img src="images/shellcheck.png" alt="shellcheck" width="80%" /></div></section>
+<section id="intellij_idea__ci"><h2>Intellij IDEA в CI</h2><div class="ulist fragment"><ul><li><p><code>bin/format.sh</code>&#8201;&#8212;&#8201;форматирование кода</p></li><li><p><code>bin/inspect.sh</code>&#8201;&#8212;&#8201;инспекции (с выводом в .xml)</p></li></ul></div>
+<div class="imageblock fragment" style=""><img src="images/idea-jenkins.png" alt="idea jenkins" width="80%" /></div></section>
+<section id=""><h2>Что из этого использовать?</h2><div class="paragraph fragment"><p>Всё!</p></div></section>
+<section id=""><h2>Как это всё использовать?</h2><div class="ulist"><ul><li class="fragment"><p>Однократное применение анализа бессмысленно</p></li><li class="fragment"><p>Анализ должен производиться <strong>непрерывно</strong> и <strong>автоматически</strong></p></li><li class="fragment"><p>Результаты анализа должны определять <strong>quality gates</strong></p></li></ul></div></section>
+<section id=""><h2>Роль и место СА в конвейере поставки</h2><table class="tableblock frame-all grid-all custom-style" style="width:100%"><colgroup><col style="width:30%" /><col style="width:70%" /></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="imageblock" style=""><img src="images/cd.jpg" alt="cd" /></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p><strong>Jez Humble, David Farley.</strong> Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation. Addison-Wesley, 2011</p></div></div></td></tr></table></section>
+<section id="" data-transition="fade-out, slide-in"><h2>Типовой конвейер сборки</h2><div class="paragraph"><p>&#160;<br />
+&#160;</p></div>
+<div class="imageblock" style=""><img src="images/pipeline2.svg" alt="pipeline2" width="100%" /></div></section>
+<section id="" data-transition="fade-out, fade-in"><h2>Типовой конвейер сборки</h2><div class="paragraph"><p>«Фильтрующая способность»<br />
+&#160;</p></div>
+<div class="imageblock" style=""><img src="images/raising2.svg" alt="raising2" width="80%" /></div>
+<div class="imageblock" style=""><img src="images/pipeline2.svg" alt="pipeline2" width="100%" /></div></section>
+<section id="" data-transition="fade-in, slide-out"><h2>Типовой конвейер сборки</h2><div class="paragraph"><p>Сложность, стоимость,<br />
+время работы, вероятность сбоя</p></div>
+<div class="imageblock" style=""><img src="images/raising2.svg" alt="raising2" width="80%" /></div>
+<div class="imageblock" style=""><img src="images/pipeline2.svg" alt="pipeline2" width="100%" /></div></section>
+<section id="" data-transition="fade-out, slide-in"><h2>Многоступенчатый фильтр</h2><div class="paragraph"><p>&#160;</p></div>
+<div class="imageblock" style=""><img src="images/water-filtration.jpg" alt="water filtration" width="50%" /></div></section>
+<section id="" data-transition="fade-out, fade-in"><h2>Многоступенчатый фильтр</h2><div class="paragraph"><p>Размер пропускаемого загрязнения<br />
+Пропускная способность</p></div>
+<div class="imageblock" style=""><img src="images/decreasing.svg" alt="decreasing" width="40%" /></div>
+<div class="imageblock" style=""><img src="images/water-filtration.jpg" alt="water filtration" width="40%" /></div></section>
+<section id="" data-transition="fade-in, slide-out"><h2>Многоступенчатый фильтр</h2><div class="paragraph"><p>Сложность, стоимость<br />
+&#160;</p></div>
+<div class="imageblock" style=""><img src="images/raising.svg" alt="raising" width="40%" /></div>
+<div class="imageblock" style=""><img src="images/water-filtration.jpg" alt="water filtration" width="40%" /></div></section>
+<section id=""><h2>Вывод</h2><div class="ulist"><ul><li class="fragment"><p>Статанализ — «фильтр грубой очистки» в начале каскада фильтров</p></li><li class="fragment"><p>В отдельности от других — не работает</p></li><li class="fragment"><p>Другие без него работают хуже</p></li></ul></div></section>
+<section id=""><h2>Случай из практики: долгий отклик</h2><div class="paragraph"><p><code>resource.json</code></p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code class="json language-json">{
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">key</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">value with </span><span class="delimiter">&quot;</span></span><span class="error">u</span><span class="error">n</span><span class="error">e</span><span class="error">s</span><span class="error">c</span><span class="error">a</span><span class="error">p</span><span class="error">e</span><span class="error">d</span> <span class="error">q</span><span class="error">u</span><span class="error">o</span><span class="error">t</span><span class="error">e</span><span class="error">s</span><span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span>
+}</code></pre></div></div>
+<div class="ulist"><ul><li class="fragment"><p>Все UI тесты падают.</p></li><li class="fragment"><p>Но это происходит <strong>спустя дни</strong>.</p></li></ul></div></section>
+<section id=""><h2>Случай из практики: лечение</h2><div class="ulist"><ul><li><p>Добавляем JSONLint в начало пути</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code class="bash language-bash">find . -name \\*.json -print0 | xargs -0 -n1 -t jsonlint -q</code></pre></div></div>
+<div class="ulist fragment"><ul><li><p>Отклик на проблему идёт <strong>сразу</strong></p></li></ul></div>
+<div class="ulist fragment"><ul><li><p>PROFIT</p></li></ul></div></section>
+<section id="legacy_" data-transition="fade-out, slide-in"><h2>Внедрение в legacy-проект</h2></section>
+<section id="legacy__2" data-transition="fade-in, slide-out"><h2>Внедрение в legacy-проект</h2><div class="paragraph"><p>Знакомая картина?</p></div>
+<div class="imageblock" style=""><img src="images/legacy.png" alt="legacy" width="70%" /></div>
+<div class="paragraph fragment"><p><strong>Оставить нельзя пофиксить!</strong></p></div></section>
+<section id="" data-background-image="images/swampman.jpg" data-background-size="cover"></section>
+<section id=""><h2>Пофиксить автоматически?</h2><div class="paragraph"><p>Google + Stackoverflow:</p></div>
+<div class="ulist"><ul><li><p>'sed remove trailing spaces'</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code> find . -name '*.py' -print0 | xargs -0 -n1 -t \
+    sed -i -r 's/\s+$//'</code></pre></div></div>
+<div class="ulist"><ul><li><p>'bash add a newline to the end of a file'</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code>find . -name '*.java' -print0 | xargs -0 -L1 bash \
+    -c 'test "$(tail -c 1 "$0")" &amp;&amp; printf "\r\n" &gt;&gt; $0'</code></pre></div></div>
+<div class="ulist"><ul><li><p>etc etc</p></li></ul></div></section>
+<section id=""><h2>Автофикс</h2><div class="ulist"><ul><li><p>Javascript: <code>eslint --fix</code></p></li></ul></div></section>
+<section id="spotless__"><h2>Spotless: идемпотентный автоформаттер</h2><div class="paragraph"><p>Spotless can format</p></div>
+<div class="paragraph"><p>&lt;java | kotlin | scala | sql | groovy | javascript | flow | typeScript | css | scss | less | jsx | vue | graphql | json | yaml | markdown | license headers | anything&gt;</p></div>
+<div class="paragraph"><p>using</p></div>
+<div class="paragraph"><p>&lt;gradle | maven | anything&gt;</p></div></section>
+<section id="" data-background-image="images/more-pure.jpg" data-background-size="cover"></section>
+<section id="quality_gates"><h2>Quality Gates</h2><div class="imageblock" style=""><img src="images/porta_del_paradiso.jpg" alt="porta del paradiso" width="30%" /></div></section>
+<section id=""><h2>Пороговое значение находок</h2><div class="ulist"><ul><li class="fragment"><p>«Если меньше 100 находок, то код ОК»</p></li><li class="fragment"><p>ДАНО: в коде 90 находок и код ОК.</p></li><li class="fragment"><p>Добавляем Null Pointer Dereference.</p></li><li class="fragment"><p>У нас 91 находка, код всё ещё ОК?</p></li></ul></div>
+<div class="paragraph fragment"><p>Вывод: не используйте данный метод!</p></div></section>
+<section id="suppression_profile"><h2>Suppression Profile</h2><div class="ulist"><ul><li><p>Старые находки&#8201;&#8212;&#8201;в игнор</p></li><li><p>Новые находки&#8201;&#8212;&#8201;не пропускаем</p></li></ul></div></section>
+<section id="suppression_profile_2"><h2>Suppression Profile</h2><div class="paragraph"><p>Наивный подход:</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code class="xml language-xml"><span class="tag">&lt;file</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">AppProperties.java</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;error</span> <span class="attribute-name">line</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">31</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">column</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">5</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">message</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Missing a Javadoc comment.</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;error</span> <span class="attribute-name">line</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">36</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">column</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">5</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">message</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Missing a Javadoc comment.</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/file&gt;</span></code></pre></div></div>
+<div class="paragraph fragment"><p>Добавляем текст в начало файла&#8230;&#8203;</p></div>
+<div class="paragraph fragment"><p>&#8230;&#8203;номера строк "уползли" и все находки снова появились.</p></div></section>
+<section id="suppression_profile_3"><h2>Suppression Profile</h2><div class="paragraph"><p>Подход PVS-Studio --- хеши строк:</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code class="json language-json">{
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">FileName</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">CelestaParser.java</span><span class="delimiter">&quot;</span></span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">ErrorCode</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">V6021</span><span class="delimiter">&quot;</span></span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">CodePrev</span><span class="delimiter">&quot;</span></span>: <span class="integer">-1464702071</span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">CodeCurrent</span><span class="delimiter">&quot;</span></span>: <span class="integer">-1679070819</span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">CodeNext</span><span class="delimiter">&quot;</span></span>: <span class="integer">35764079</span>
+}</code></pre></div></div></section>
+<section id="suppression_profile_4"><h2>Suppression Profile</h2><div class="paragraph"><p>Вывод: метод хорош, но труднодоступен</p></div></section>
+<section id=""><h2>Проверка правописания</h2><div class="imageblock" style=""><img src="images/hard_to_spell.svg" alt="hard to spell" width="80%" /></div></section>
+<section id=""><h2>Проверка правописания</h2><table class="tableblock frame-all grid-all custom-style" style="width:100%"><colgroup><col style="width:24.7311%" /><col style="width:75.2689%" /></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="imageblock" style=""><img src="images/aspell.png" alt="aspell" /></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Проверка документации:</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code class="bash language-bash">for f in $(find . -name '*.adoc'); do \
+   cat $f | aspell --master=ru \
+   --personal=./dict list; done \
+   | sort | uniq</code></pre></div></div>
+<div class="paragraph"><p>Проверка литералов и комментариев:</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code class="bash language-bash">for f in $(find . -name '*.java'); do \
+   cat $f | aspell --mode=ccpp \
+   --master=ru --personal=./dict list; done\
+   | sort | uniq</code></pre></div></div></div></td></tr></table></section>
+<section id=""><h2>Проверка правописания</h2><div class="ulist"><ul><li class="fragment"><p>Храните пользовательский словарь в проекте</p></li><li class="fragment"><p>Quality Gate: <strong>не должно быть незнакомых спелчекеру слов</strong>.</p></li></ul></div></section>
+<section id=""><h2>Упавшая проверка</h2><div class="imageblock" style=""><img src="images/aspell-fail.png" alt="aspell fail" width="60%" /></div></section>
+<section id=""><h2>Проверка правописания</h2><div class="paragraph"><p>Вывод: spellchecker может быть частью пайплайна</p></div></section>
+<section id=""><h2>Храповик</h2><div class="imageblock" style=""><img src="images/ratchet.png" alt="ratchet" /></div></section>
+<section id="" data-transition="fade-out, slide-in"><h2>Принцип работы</h2><div class="imageblock" style=""><img src="images/ratchet-p0.png.png" alt="ratchet p0.png" /></div></section>
+<section id="" data-transition="fade-in, fade-out"><h2>Принцип работы</h2><div class="imageblock" style=""><img src="images/ratchet-p1.png.png" alt="ratchet p1.png" /></div></section>
+<section id=""><h2>Упавшая проверка</h2><div class="imageblock" style=""><img src="images/jenkins-fail2.png" alt="jenkins fail2" /></div></section>
+<section id="" data-transition="fade-in, fade-out"><h2>Принцип работы</h2><div class="imageblock" style=""><img src="images/ratchet-p2.png.png" alt="ratchet p2.png" /></div></section>
+<section id="" data-transition="fade-in, slide-out"><h2>Принцип работы</h2><div class="imageblock" style=""><img src="images/ratchet-p3.png.png" alt="ratchet p3.png" /></div></section>
+<section id=""><h2>Много модулей/инструментов</h2><div class="paragraph"><p>Вид метаданных:</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code class="yaml language-yaml">         <span class="comment"># warnings.yml</span>
+         <span class="key">celesta-sql</span>:
+           <span class="key">checkstyle</span>: <span class="string"><span class="content">434</span></span>
+           <span class="key">spotbugs</span>: <span class="string"><span class="content">45</span></span>
+         <span class="key">celesta-core</span>:
+           <span class="key">checkstyle</span>: <span class="string"><span class="content">206</span></span>
+           <span class="key">spotbugs</span>: <span class="string"><span class="content">13</span></span>
+         <span class="key">celesta-maven-plugin</span>:
+           <span class="key">checkstyle</span>: <span class="string"><span class="content">19</span></span>
+           <span class="key">spotbugs</span>: <span class="string"><span class="content">0</span></span>
+         <span class="key">celesta-unit</span>:
+           <span class="key">checkstyle</span>: <span class="string"><span class="content">0</span></span>
+           <span class="key">spotbugs</span>: <span class="string"><span class="content">0</span></span></code></pre></div></div></section>
+<section id=""><h2>Упавшая проверка</h2><div class="imageblock" style=""><img src="images/ratchet-report.png" alt="ratchet report" width="60%" /></div></section>
+<section id=""><h2>Как это реализовано у нас</h2><div class="ulist"><ul><li><p>Jenkins scripted pipeline</p></li><li><p>Jenkins shared libraries in Groovy</p></li><li><p>JFrog Artifactory для хранения метаданных о сборках</p></li></ul></div></section>
+<section id="xml__"><h2>Парсинг XML-вывода анализаторов</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="xml language-xml"><span class="tag">&lt;checkstyle&gt;</span>
+  <span class="tag">&lt;file</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;error</span> <span class="attribute-name">line</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">severity</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">message</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;/file&gt;</span>
+    ...
+<span class="tag">&lt;/checkstyle&gt;</span></code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="directive">private</span> <span class="predefined-type">Map</span> countModule(prefix) {
+    <span class="keyword">def</span> count = [:]
+    <span class="keyword">def</span> f = <span class="keyword">new</span> <span class="predefined-type">File</span>(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">${</span>prefix<span class="inline-delimiter">}</span></span><span class="content">/target/checkstyle-result.xml</span><span class="delimiter">&quot;</span></span>)
+    <span class="keyword">if</span> (f.exists()) {
+        <span class="keyword">def</span> checkstyle = <span class="keyword">new</span> XmlSlurper().parseText(f.text)
+        count.put(<span class="string"><span class="delimiter">&quot;</span><span class="content">checkstyle</span><span class="delimiter">&quot;</span></span>, checkstyle.file.error.size())
+    }
+    . . .
+    count
+}</code></pre></div></div></section>
+<section id=""><h2>Скачиваем данные о последней сборке</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">def</span> server = Artifactory.server <span class="string"><span class="delimiter">'</span><span class="content">ART</span><span class="delimiter">'</span></span>
+<span class="keyword">def</span> downloadSpec = <span class="string"><span class="delimiter">&quot;&quot;&quot;</span><span class="content">
+        {&quot;files&quot;: [
+            {
+                &quot;pattern&quot;: &quot;warn/</span><span class="inline"><span class="inline-delimiter">${</span>project<span class="inline-delimiter">}</span></span><span class="content">/*/warnings.yml&quot;,
+                &quot;build&quot;: &quot;</span><span class="inline"><span class="inline-delimiter">${</span>project<span class="inline-delimiter">}</span></span><span class="content"> :: dev/LATEST&quot;,
+                &quot;target&quot;: &quot;previous.yml&quot;,
+                &quot;flat&quot;: &quot;true&quot;
+            }
+            ]
+        }</span><span class="delimiter">&quot;&quot;&quot;</span></span>
+server.download <span class="key">spec</span>: downloadSpec
+oldWarnings = readYaml <span class="key">file</span>: <span class="string"><span class="delimiter">'</span><span class="content">previous.yml</span><span class="delimiter">'</span></span></code></pre></div></div></section>
+<section id=""><h2>Шаг храповика</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy">stage (<span class="string"><span class="delimiter">'</span><span class="content">Ratcheting</span><span class="delimiter">'</span></span>) {
+    <span class="keyword">def</span> warningsMap = countWarnings()
+    writeYaml <span class="key">file</span>: <span class="string"><span class="delimiter">'</span><span class="content">target/warnings.yml</span><span class="delimiter">'</span></span>, <span class="key">data</span>: warningsMap
+    compareWarningMaps oldWarnings, warningsMap
+}</code></pre></div></div></section>
+<section id="jenkins_warnings_ng_plugin"><h2>Jenkins Warnings NG Plugin</h2><div class="paragraph"><p>Собирает и читает отчёты всех известных анализаторов</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy"><span class="keyword">def</span> checkstyle
+  = scanForIssues <span class="key">tool</span>: checkStyle(<span class="key">pattern</span>: <span class="string"><span class="delimiter">'</span><span class="content">**/cs.xml</span><span class="delimiter">'</span></span>)
+
+<span class="keyword">def</span> spotbugs
+  = scanForIssues <span class="key">tool</span>: spotBugs(<span class="key">pattern</span>: <span class="string"><span class="delimiter">'</span><span class="content">**/spotbugs.xml</span><span class="delimiter">'</span></span>)
+
+<span class="keyword">def</span> idea
+  = scanForIssues <span class="key">tool</span>: ideaInspection(<span class="key">pattern</span>: <span class="string"><span class="delimiter">'</span><span class="content">target/idea_inspections/*.xml</span><span class="delimiter">'</span></span>)
+
+<span class="keyword">def</span> eslint
+  = scanForIssues <span class="key">tool</span>: esLint(<span class="key">pattern</span>: <span class="string"><span class="delimiter">'</span><span class="content">**/eslint.xml</span><span class="delimiter">'</span></span>)
+
+publishIssues <span class="key">issues</span>: [checkstyle, spotbugs, idea, eslint]
+. . .</code></pre></div></div></section>
+<section id="jenkins_warnings_ng_plugin_2"><h2>Jenkins Warnings NG Plugin</h2><div class="paragraph"><p>Красиво отображает</p></div>
+<div class="imageblock" style=""><img src="images/warnings-ng.png" alt="warnings ng" /></div></section>
+<section id="jenkins_warnings_ng_plugin_3"><h2>Jenkins Warnings NG Plugin</h2><div class="paragraph"><p>Можно программировать Quality Gates, в т. ч. в виде разницы с reference build:</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code class="groovy language-groovy">recordIssues <span class="key">tool</span>: java(<span class="key">pattern</span>: <span class="string"><span class="delimiter">'</span><span class="content">*.log</span><span class="delimiter">'</span></span>),
+             <span class="key">qualityGates</span>: [[<span class="key">threshold</span>: <span class="integer">1</span>,
+                             <span class="key">type</span>: <span class="string"><span class="delimiter">'</span><span class="content">TOTAL</span><span class="delimiter">'</span></span>,
+                             <span class="key">unstable</span>: <span class="predefined-constant">true</span>]]</code></pre></div></div></section>
+<section id=""><h2>Храповик: ожидание</h2><div class="imageblock" style=""><img src="images/expected-ratchet.svg" alt="expected ratchet" width="60%" /></div></section>
+<section id=""><h2>Храповик: реальность</h2><div class="imageblock" style=""><img src="images/actual-ratchet.svg" alt="actual ratchet" width="60%" /></div></section>
+<section id=""><h2>Случай из практики</h2><div class="paragraph"><p>Кто здесь видит проблему?</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code class="yaml language-yaml"><span class="comment">#.travis.yml</span>
+<span class="error">. . .</span>
+<span class="key">install</span>:
+  - <span class="string"><span class="content">pip install yamllint</span></span>
+  - <span class="string"><span class="content">pip install ansible-lint</span></span>
+
+<span class="key">script</span>:
+  <span class="error">. . .</span>
+  <span class="comment"># Check YAML validity</span>
+  - <span class="string"><span class="content">yamllint -c yamllint.yml .</span></span>
+
+  <span class="comment"># Ansible code static analysis</span>
+  - <span class="string"><span class="content">ansible-lint . . .</span></span>
+  - <span class="string"><span class="content">ansible-lint . . .</span></span>
+  - <span class="string"><span class="content">ansible-lint . . .</span></span></code></pre></div></div></section>
+<section id=""><h2>Невоспроизводимая сборка</h2><div class="imageblock" style=""><img src="images/unstable-update.png.png" alt="unstable update.png" /></div></section>
+<section id=""><h2>При замене фильтров бывает грязно!</h2><div class="imageblock" style=""><img src="images/dirty_filter.jpg" alt="dirty filter" width="40%" /></div></section>
+<section id=""><h2>Фиксируем версии всего!</h2><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="yaml language-yaml"><span class="comment">#.travis.yml</span>
+<span class="error">. . .</span>
+<span class="key">install</span>:
+  - <span class="string"><span class="content">pip install yamllint==1.13.0</span></span>
+  - <span class="string"><span class="content">pip install ansible-lint==3.5.1</span></span></code></pre></div></div></section>
+<section id=""><h2>Выводы</h2></section>
+<section id=""><h2>Статанализ разнообразен</h2><div class="imageblock" style=""><img src="images/many_filters.jpg" alt="many filters" width="60%" /></div></section>
+<section id=""><h2>Статанализ бесполезен при нерегулярном применении</h2><div class="imageblock" style=""><img src="images/muddy_water.jpg" alt="muddy water" width="60%" /></div></section>
+<section id=""><h2>Фильтр грубой очистки ставится в начале каскада</h2><div class="imageblock" style=""><img src="images/rough_filter.jpg" alt="rough filter" width="60%" /></div></section>
+<section id=""><h2>Используйте храповик</h2><div class="imageblock" style=""><img src="images/ratchet.svg" alt="ratchet" width="60%" /></div></section>
+<section id=""><h2>Не забывайте про повторяемость сборок</h2><div class="imageblock" style=""><img src="images/repeatable.jpg" alt="repeatable" width="60%" /></div></section>
+<section id=""><h2>Ссылки</h2><div class="ulist"><ul><li><p><strong>Humble, Jez; Farley, David (2011).</strong> Continuous Delivery: reliable software releases through build, test, and deployment automation.</p></li><li><p><strong>Иван Пономарев</strong> <a href="https://habr.com/ru/post/436868/">Внедряйте статический анализ в процесс, а не ищите с его помощью баги</a></p></li><li><p><strong>Иван Пономарев</strong> <a href="https://habr.com/ru/post/450214/">Запускаем инспекции IntelliJ IDEA на Jenkins</a></p></li><li><p><strong>Алексей Кудрявцев</strong> <a href="https://www.youtube.com/watch?v=8Cx3LHNjI24">Анализ программ: как понять, что ты хороший программист</a></p></li></ul></div></section>
+<section id=""><h2>На этом всё!</h2><div class="ulist"><ul><li><p><span class="icon"><i class="fa fa-twitter fa-lg"></i></span>  @inponomarev
+&#160;<br /></p></li><li><p><span class="icon"><i class="fa fa-envelope fa-lg"></i></span> <a href="mailto:ponomarev@corchestra.ru">ponomarev@corchestra.ru</a>
+&#160;<br /></p></li><li><p><strong>Спасибо!</strong></p></li></ul></div>
+<div class="imageblock" style=""><img src="images/ratchet.png" alt="ratchet" width="20%" /></div></section></div></div><script src="reveal.js-3.5.0/lib/js/head.min.js"></script><script src="reveal.js-3.5.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: false,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: true,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'black',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'linear',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 1600,
+  height: 900,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js-3.5.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js-3.5.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js-3.5.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: 'reveal.js-3.5.0/plugin/zoom-js/zoom.js', async: true },
+      { src: 'reveal.js-3.5.0/plugin/notes/notes.js', async: true }
+  ]
+});</script></body></html>
