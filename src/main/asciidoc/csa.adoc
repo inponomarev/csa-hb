@@ -35,15 +35,17 @@ icon:twitter[size=lg] @inponomarev
 
 image::faucet.jpg[canvas, size=cover]
 
+[%notitle]
 == Кодим
 
-image::intake.jpg[{image-70-width}]
+image::intake.jpg[{image-100-width}]
 
+[%notitle]
 == Delivery Pipeline
 
-image::water-filtration.jpg[{image-70-width}]
+image::water-filtration.jpg[{image-100-width}]
 
-
+[%notitle]
 == Покупайте лучшие анализаторы!
 
 //.Источник: https://commons.wikimedia.org/wiki/File:Oftheunicorn.jpg[The history of four-footed beasts and serpents]
@@ -139,6 +141,8 @@ image::horse.jpg[{image-50-width}]
 * Проверка стиля кодирования (checkstyle, flake8)
 * Поиск характерных ошибок в коде (spotbugs, IDEA, PVS-Studio)
 * Проверка валидности ресурсных файлов (xmllint, YAMLlint, JSONLint)
+
+
 * Компиляция/парсинг (`ansible --syntax-check`, `terraform validate`)
 * Предупреждения компиляторов
 * Проверка правописания
@@ -190,9 +194,10 @@ https://habr.com/post/450214/[Запускаем инспекции IntelliJ IDE
 [transition="fade-out, slide-in"]
 == Типовой конвейер сборки
 
+{nbsp} +
 {nbsp}
 
-image::pipeline.svg[{image-80-width}]
+image::pipeline2.svg[{image-100-width}]
 
 [transition="fade-out, fade-in"]
 == Типовой конвейер сборки
@@ -200,10 +205,10 @@ image::pipeline.svg[{image-80-width}]
 «Фильтрующая способность» +
 {nbsp}
 
-image::raising.svg[{image-50-width}]
+image::raising2.svg[{image-80-width}]
 
 
-image::pipeline.svg[{image-70-width}]
+image::pipeline2.svg[{image-100-width}]
 
 
 [transition="fade-in, slide-out"]
@@ -212,9 +217,9 @@ image::pipeline.svg[{image-70-width}]
 Сложность, стоимость, +
 время работы, вероятность сбоя
 
-image::raising.svg[{image-50-width}]
+image::raising2.svg[{image-80-width}]
 
-image::pipeline.svg[{image-70-width}]
+image::pipeline2.svg[{image-100-width}]
 
 
 
@@ -307,6 +312,12 @@ image::legacy.png[{image-70-width}]
 
 [.fragment]
 *Оставить нельзя пофиксить!*
+
+[%notitle]
+== С легаси нелегко
+
+image::swampman.jpg[{image-100-width}]
+
 
 == Пофиксить автоматически?
 
@@ -440,9 +451,6 @@ image::aspell-fail.png[{image-60-width}]
 Вывод: spellchecker может быть частью пайплайна
 
 == Храповик
-
-Штука, позволяющая движение +
-только в нужную сторону
 
 image::ratchet.png[]
 
@@ -710,6 +718,12 @@ digraph G {
 }
 -----
 
+[%notitle]
+== При смене фильтров бывает грязно
+image::dirty_filter.jpg[]
+
+// http://profilter.su/catalog/filtry-big-blue-10-dlya-kholodnoy-vody/945.html
+
 == Фиксируем версии всего!
 [source,yaml]
 ----
@@ -721,17 +735,34 @@ install:
 ----
 
 == Выводы
-[%step]
-* Статический анализ многолик
-* Статический анализ бесполезен при нерегулярном применении
-* Внедряйте анализ в качестве первого звена конвейера интеграции
-* Устанавливайте quality gates. Используйте метод храповика
-* Не забывайте про воспроизводимость сборок
+
+== Статанализ разнообразен
+
+image::many_filters.jpg[]
+
+[%notitle]
+== Статанализ бесполезен при нерегулярном применении
+
+image::muddy_water.jpg[]
+// https://www.fluidrecyclesystems.com/portfolio/mine-tailings-csg/
+
+== Фильтр грубой очистки ставится в начале каскада
+image::rough_filter.jpg[]
+
+== Используйте храповик
+image::ratchet.svg[]
+
+
+
+== Не забывайте про повторяемость сборок
+image::repeatable.jpg[]
+
 
 == Ссылки
 
 * *Humble, Jez; Farley, David (2011).* Continuous Delivery: reliable software releases through build, test, and deployment automation.
 * *Иван Пономарев* https://habr.com/ru/post/436868/[Внедряйте статический анализ в процесс, а не ищите с его помощью баги]
+* *Иван Пономарев* https://habr.com/ru/post/450214/[Запускаем инспекции IntelliJ IDEA на Jenkins]
 * *Алексей Кудрявцев* https://www.youtube.com/watch?v=8Cx3LHNjI24[Анализ программ: как понять, что ты хороший программист]
 
 == На этом всё!
