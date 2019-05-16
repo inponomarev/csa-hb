@@ -33,7 +33,7 @@ icon:twitter[size=lg] @inponomarev
 [%notitle]
 == Льём в прод
 
-image::faucet.jpg[canvas, size=cover]
+image::faucet.jpg[{canvas, size=cover}]
 
 == Кодим
 
